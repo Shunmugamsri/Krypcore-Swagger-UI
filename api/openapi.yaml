@@ -1,0 +1,2822 @@
+openapi: 3.0.0
+info:
+  title: 👋Welcome to Krypcore Web3 API's
+  description: Core service API's
+  version: 1.0.0
+servers:
+- url: https://api.krypcore.com/api/v0
+- url: https://web3-proxy-dev.krypcore.com/api/v0
+- url: http://localhost:8889
+paths:
+  /wallet/createWallet:
+    post:
+      tags:
+      - Self Managed Wallet
+      summary: Create a new wallet
+      description: |
+        - **Local development server**: http://localhost:8889
+      operationId: walletCreateWalletPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/wallet_createWallet_body'
+        required: true
+      responses:
+        "200":
+          description: Wallet created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "417":
+          description: Key exists with specified name
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_417'
+      x-swagger-router-controller: SelfManagedWallet
+  /wallet/getBalance:
+    post:
+      tags:
+      - Self Managed Wallet
+      summary: Get wallet balance
+      description: |
+        - **Local development server**: http://localhost:8889
+      operationId: walletGetBalancePOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/wallet_getBalance_body'
+        required: true
+      responses:
+        "200":
+          description: Balance retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "417":
+          description: No documents found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_417_1'
+      x-swagger-router-controller: SelfManagedWallet
+  /wallet/signMessage:
+    post:
+      tags:
+      - Self Managed Wallet
+      summary: Sign a message
+      description: |
+        - **Local development server**: http://localhost:8889
+      operationId: walletSignMessagePOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/wallet_signMessage_body'
+        required: true
+      responses:
+        "200":
+          description: Message signed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "417":
+          description: Invalid UUID length
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_417_2'
+      x-swagger-router-controller: SelfManagedWallet
+  /wallet/verifySignatureOffChain:
+    post:
+      tags:
+      - Self Managed Wallet
+      summary: Verify signature off-chain
+      description: |
+        - **Local development server**: http://localhost:8889
+      operationId: walletVerifySignatureOffChainPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/wallet_verifySignatureOffChain_body'
+        required: true
+      responses:
+        "200":
+          description: Signature verified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "417":
+          description: Error verifying signature
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_417_3'
+      x-swagger-router-controller: SelfManagedWallet
+  /wallet/deployContract:
+    post:
+      tags:
+      - Self Managed Wallet
+      summary: Deploy a smart contract
+      description: |
+        - **Local development server**: http://localhost:8889
+      operationId: walletDeployContractPOST
+      parameters:
+      - name: ChainId
+        in: header
+        description: The chain ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/wallet_deployContract_body'
+        required: true
+      responses:
+        "200":
+          description: Contract deployed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+        "417":
+          description: Error deploying contract
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_417_4'
+      x-swagger-router-controller: SelfManagedWallet
+  /wallet/submitTransaction:
+    post:
+      tags:
+      - Self Managed Wallet
+      summary: Submit a transaction
+      description: |
+        - **Local development server**: http://localhost:8889
+      operationId: walletSubmitTransactionPOST
+      parameters:
+      - name: ChainId
+        in: header
+        description: The chain ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/wallet_submitTransaction_body'
+        required: true
+      responses:
+        "200":
+          description: Transaction submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5'
+        "401":
+          description: Key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "417":
+          description: Error submitting transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_417_5'
+      x-swagger-router-controller: SelfManagedWallet
+  /wallet/estimateGas:
+    post:
+      tags:
+      - Self Managed Wallet
+      summary: Estimate gas for a transaction
+      description: |
+        - **Local development server**: http://localhost:8889
+      operationId: walletEstimateGasPOST
+      parameters:
+      - name: ChainId
+        in: header
+        description: The chain ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/wallet_estimateGas_body'
+        required: true
+      responses:
+        "200":
+          description: Gas estimated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_6'
+        "417":
+          description: Error estimating gas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_417_6'
+      x-swagger-router-controller: SelfManagedWallet
+  /wallet/callContract:
+    post:
+      tags:
+      - Self Managed Wallet
+      summary: Call a smart contract method
+      description: |
+        - **Local development server**: http://localhost:8889
+      operationId: walletCallContractPOST
+      parameters:
+      - name: ChainId
+        in: header
+        description: The chain ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/wallet_callContract_body'
+        required: true
+      responses:
+        "200":
+          description: Contract method called successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_7'
+        "401":
+          description: Key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "417":
+          description: Error calling contract method
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_417_6'
+      x-swagger-router-controller: SelfManagedWallet
+  /devWallet/generateKeys:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Generate wallet keys
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletGenerateKeysPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_generateKeys_body'
+        required: true
+      responses:
+        "200":
+          description: Keys generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_8'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/deployContract:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Deploy Contract
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletDeployContractPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_deployContract_body'
+        required: true
+      responses:
+        "200":
+          description: Contract deployed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_9'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/callContract:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Call a Smart Contract Method
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletCallContractPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_callContract_body'
+        required: true
+      responses:
+        "200":
+          description: Contract method called successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_10'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/getBalance:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Get Balance of an Address
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletGetBalancePOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_getBalance_body'
+        required: true
+      responses:
+        "200":
+          description: Balance retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_11'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/createAndExecuteTx:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Create and Execute Transaction
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletCreateAndExecuteTxPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_createAndExecuteTx_body'
+        required: true
+      responses:
+        "200":
+          description: Transaction created and executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_12'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/signEIP712Tx:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Sign EIP712 Transaction
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletSignEIP712TxPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_signEIP712Tx_body'
+        required: true
+      responses:
+        "200":
+          description: Data signed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_13'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/verifySignatureOffChain:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Verify Signature Off-Chain
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletVerifySignatureOffChainPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_verifySignatureOffChain_body'
+        required: true
+      responses:
+        "200":
+          description: Signature verification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_14'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/signMessage:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Sign Message
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletSignMessagePOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_signMessage_body'
+        required: true
+      responses:
+        "200":
+          description: Message signed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_15'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/signTxHash:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Sign Transaction Hash
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletSignTxHashPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_signTxHash_body'
+        required: true
+      responses:
+        "200":
+          description: Transaction hash signed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_16'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /devWallet/estimateGas:
+    post:
+      tags:
+      - Developer Wallet
+      summary: Estimate Gas
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: devWalletEstimateGasPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devWallet_estimateGas_body'
+        required: true
+      responses:
+        "200":
+          description: Gas estimation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_17'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      - SubscriptionIdAuth: []
+      x-swagger-router-controller: DeveloperWallet
+  /ft-manager/createERC20:
+    post:
+      tags:
+      - FT manager
+      summary: Create ERC20 Token
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: ft_managerCreateERC20POST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ftmanager_createERC20_body'
+            examples:
+              example1:
+                summary: Self Managed Wallet
+                value:
+                  ERCStandard: ERC20
+                  chainId: xxxx
+                  custodialWalletAccessToken: xxxx
+                  decimal: 0
+                  premintAddress: xxxx
+                  quantity: 0
+                  tokenName: xxxx
+                  tokenSymbol: xxxx
+                  walletType: non-custodial
+              example2:
+                summary: Developer Wallet
+                value:
+                  ERCStandard: ERC20
+                  chainId: xxxx
+                  privateKey: xxxx
+                  decimal: 0
+                  premintAddress: xxxx
+                  quantity: 0
+                  tokenName: xxxx
+                  tokenSymbol: xxxx
+                  walletType: dev-wallet
+        required: true
+      responses:
+        "200":
+          description: ERC20 Token created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_18'
+              example:
+                Data:
+                  contractAddress: ""
+                  referenceId: efb44f86-f6ae-463c-9ca6-76622dc6461f
+                  txnHash: ""
+                Message: ERC20 Token Created Successfully
+                Status: SUCCESS
+        "400":
+          description: No/multiple instances found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+              example:
+                Status: FAILURE
+                Code: 400
+                Message: no / multiple instances found
+        "409":
+          description: Token name is taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+              example:
+                Data: "Token name is taken, try new name"
+                Message: "Token name is taken, try new name"
+                Status: FAILURE
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      x-swagger-router-controller: FTManager
+  /ft-manager/erc20-token:
+    post:
+      tags:
+      - FT manager
+      summary: Get All FT Details
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: ft_managerErc20_tokenPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ftmanager_erc20token_body'
+        required: true
+      responses:
+        "200":
+          description: ERC20 tokens fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_19'
+              example:
+                Data:
+                  pageCount: 10
+                  result:
+                  - _id: 6656cd84d37d0808c1bd3ba3
+                    apiKey: dce12201-8586-4db8-8189-d63373c31009
+                    chainId: "43113"
+                    contractAddress: ""
+                    createdAt: 2024-05-29T06:39:00.816Z
+                    createdBy: DEV_SHUN_203_20240205
+                    custodialWalletAccessToken: bb4e0750-2d28-40ca-89a3-e6e84b211360
+                    decimal: 2
+                    ercStandard: ERC20
+                    instanceRef: INS_FT_440_2024523
+                    isDefault: false
+                    premintAddress: 0xb15E8b65Cd2ddfa002EB6B3cD6b6eA2624AF8a3f
+                    privatekey: ""
+                    projectID: DEV_SHAN_SHUN_594_20240523
+                    quantity: "10000"
+                    referenceId: ab6aa863-13e6-4b78-9efb-266f4f3ef8e7
+                    status: PENDING
+                    subscriptionId: "4650525399"
+                    tokenName: FT-ERC20-29-05-TESTING-GO
+                    tokenSymbol: FTGO
+                    txnHash: ""
+                    uniqueId: FT-COL-YsNoKsVqwEPgbyMWonzuJyeH
+                    updatedAt: 2024-05-29T06:39:00.816Z
+                    walletAddress: ""
+                    walletType: non-custodial
+                  Message: Ok
+                  Status: SUCCESS
+        "400":
+          description: InstanceId missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+              example:
+                Message: InstanceId missing
+                Status: FAILURE
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      x-swagger-router-controller: FTManager
+  /ft-manager/mintFT:
+    post:
+      tags:
+      - FT manager
+      summary: Mint ERC20 Token
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: ft_managerMintFTPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ftmanager_mintFT_body'
+            examples:
+              example1:
+                summary: Self Managed Wallet
+                value:
+                  erc: ERC20
+                  chainId: xxxx
+                  contractAddress: xxxx
+                  custodialWalletAccessToken: xxxx
+                  quantity: "0"
+                  recipientAddress: xxxx
+                  walletType: non-custodial
+              example2:
+                summary: Developer Wallet
+                value:
+                  erc: ERC20
+                  chainId: xxxx
+                  contractAddress: xxxx
+                  privateKey: xxxx
+                  quantity: "0"
+                  recipientAddress: xxxx
+                  walletType: dev-wallet
+        required: true
+      responses:
+        "200":
+          description: Fungible tokens minted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_20'
+              example:
+                Data:
+                  referenceId: 59acb0fc-6da0-4322-9a66-9f2f35d584a0
+                  txnHash: ""
+                Message: FT got minted successfully
+                Status: SUCCESS
+        "400":
+          description: Mandatory parameters missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+              example:
+                Message: Mandatory params missing
+                Status: FAILURE
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+              example:
+                Message: Internal server error
+                Status: FAILURE
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      x-swagger-router-controller: FTManager
+  /ft-manager/approveFT:
+    post:
+      tags:
+      - FT manager
+      summary: Approve ERC20Token
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: ft_managerApproveFTPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ftmanager_approveFT_body'
+            examples:
+              example1:
+                summary: Self Managed Wallet
+                value:
+                  approveAddress: xxxx
+                  chainId: xxxx
+                  contractAddress: xxxx
+                  custodialWalletAccessToken: xxxx
+                  quantity: "0"
+                  walletType: non-custodial
+              example2:
+                summary: Developer Wallet
+                value:
+                  approveAddress: xxxx
+                  chainId: xxxx
+                  contractAddress: xxxx
+                  privateKey: xxxx
+                  quantity: "0"
+                  walletType: dev-wallet
+        required: true
+      responses:
+        "200":
+          description: Fungible tokens approved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_20'
+              example:
+                Data:
+                  referenceId: 611d55de-c1d4-45d2-a530-c467fa6a9f0f
+                  txnHash: ""
+                Message: FT approved successfully
+                Status: SUCCESS
+        "400":
+          description: Mandatory parameters missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+              example:
+                Message: Mandatory params missing
+                Status: FAILURE
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      x-swagger-router-controller: FTManager
+  /ft-manager/transferFT:
+    post:
+      tags:
+      - FT manager
+      summary: Transfer ERC20 Token
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: ft_managerTransferFTPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ftmanager_transferFT_body'
+            examples:
+              example1:
+                summary: Self Managed Wallet
+                value:
+                  chainId: xxxx
+                  contractAddress: xxxx
+                  custodialWalletAccessToken: xxxx
+                  quantity: "0"
+                  recipientAddress: xxxx
+                  walletType: non-custodial
+              example2:
+                summary: Developer Wallet
+                value:
+                  chainId: xxxx
+                  contractAddress: xxxx
+                  privateKey: xxxx
+                  quantity: "0"
+                  recipientAddress: xxxx
+                  walletType: dev-wallet
+        required: true
+      responses:
+        "200":
+          description: FT transferred successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_21'
+        "400":
+          description: Mandatory params missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      x-swagger-router-controller: FTManager
+  /ft-manager/burnFT:
+    post:
+      tags:
+      - FT manager
+      summary: Burn ERC20Token
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: ft_managerBurnFTPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ftmanager_burnFT_body'
+            examples:
+              example1:
+                summary: Self Managed Wallet
+                value:
+                  burnAddress: xxxx
+                  chainId: xxxx
+                  contractAddress: xxxx
+                  custodialWalletAccessToken: xxxx
+                  quantity: "0"
+                  walletType: non-custodial
+              example2:
+                summary: Developer Wallet
+                value:
+                  burnAddress: xxxx
+                  chainId: xxxx
+                  contractAddress: xxxx
+                  privateKey: xxxx
+                  quantity: "0"
+                  walletType: dev-wallet
+        required: true
+      responses:
+        "200":
+          description: Fungible tokens burnt successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_20'
+              example:
+                Data:
+                  referenceId: 2cae488c-5886-48fd-b83e-eb579327df05
+                  txnHash: 2cae488c-5886-48fd-b83e-eb579327df05
+                Message: FT burnt successfully
+                Status: SUCCESS
+        "400":
+          description: Mandatory parameters missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+              example:
+                Message: Mandatory params missing
+                Status: FAILURE
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      x-swagger-router-controller: FTManager
+  /ft-manager/getTotalSupply:
+    post:
+      tags:
+      - FT manager
+      summary: Get Total Supply
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: ft_managerGetTotalSupplyPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ftmanager_getTotalSupply_body'
+        required: true
+      responses:
+        "200":
+          description: Total Supply fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_22'
+        "400":
+          description: Mandatory params missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      x-swagger-router-controller: FTManager
+  /ft-manager/balanceOf:
+    post:
+      tags:
+      - FT manager
+      summary: Get Balance of Address
+      description: |
+        - **Development server**: https://web3-proxy-dev.krypcore.com/api/v0
+      operationId: ft_managerBalanceOfPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ftmanager_balanceOf_body'
+        required: true
+      responses:
+        "200":
+          description: Balance fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_23'
+              example:
+                Data: 9323
+                Message: Balance fetched successfully
+                Status: SUCCESS
+        "400":
+          description: Mandatory parameters missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+              example:
+                Message: Mandatory params missing
+                Status: FAILURE
+        "401":
+          description: Missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_1'
+              example:
+                message: Missing API key found in request
+        "500":
+          description: Error while fetching project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+              example:
+                Message: "Error while fetching project from the instance INS_FT_440_2024523json:\
+                  \ cannot unmarshal array into Go struct field EndpointObj.Data.endpoints.BlockchainEndpoint\
+                  \ of type app.EndpointData :"
+                Status: Failure
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      - ChainIdAuth: []
+      x-swagger-router-controller: FTManager
+  /easy-nft/createNFTCollection:
+    post:
+      tags:
+      - NFT studio
+      summary: Create an NFT Collection
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: easy_nftCreateNFTCollectionPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/easynft_createNFTCollection_body'
+            examples:
+              example1:
+                summary: Self Managed Wallet
+                value:
+                  ERCStandard: ERC721
+                  chainId: xxxx
+                  collectionDescription: xxxx
+                  collectionImage: xxxx
+                  collectionName: xxxx
+                  collectionSymbol: xxxx
+                  custodialWalletAccessToken: xxxx
+                  isSoulBound: false
+                  walletType: non-custodial
+              example2:
+                summary: Developer Wallet
+                value:
+                  ERCStandard: ERC721
+                  chainId: xxxx
+                  collectionDescription: xxxx
+                  collectionImage: xxxx
+                  collectionName: xxxx
+                  collectionSymbol: xxxx
+                  privateKey: xxxx
+                  isSoulBound: false
+                  walletType: dev-wallet
+        required: true
+      responses:
+        "200":
+          description: NFT Collection created successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: NFTStudio
+  /easy-nft/nft-collection-list:
+    post:
+      tags:
+      - NFT studio
+      summary: Get NFT Collection List
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: easy_nftNft_collection_listPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/easynft_nftcollectionlist_body'
+        required: true
+      responses:
+        "200":
+          description: NFT Collection List retrieved successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: NFTStudio
+  /easy-nft/nft-collection:
+    post:
+      tags:
+      - NFT studio
+      summary: Get NFT Collection Details
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: easy_nftNft_collectionPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/easynft_nftcollection_body'
+        required: true
+      responses:
+        "200":
+          description: NFT Collection details retrieved successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: NFTStudio
+  /easy-nft/createNFT:
+    post:
+      tags:
+      - NFT studio
+      summary: Create an NFT
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: easy_nftCreateNFTPOST
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/easynft_createNFT_body'
+        required: true
+      responses:
+        "200":
+          description: NFT created successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: NFTStudio
+  /easy-nft/nft-list:
+    post:
+      tags:
+      - NFT studio
+      summary: Get NFT List
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: easy_nftNft_listPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/easynft_nftlist_body'
+        required: true
+      responses:
+        "200":
+          description: NFT List retrieved successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: NFTStudio
+  /storagemanageripfs/storefile:
+    post:
+      tags:
+      - Storage Manager
+      summary: Store a file in IPFS
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: storagemanageripfsStorefilePOST
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/storagemanageripfs_storefile_body'
+        required: true
+      responses:
+        "200":
+          description: File stored successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: StorageManager
+  /storagemanageripfs/getFileDetails:
+    post:
+      tags:
+      - Storage Manager
+      summary: Get file details from IPFS
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: storagemanageripfsGetFileDetailsPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/storagemanageripfs_getFileDetails_body'
+        required: true
+      responses:
+        "200":
+          description: File details retrieved successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: StorageManager
+  /storagemanageripfs/downloadFileFromIPFS:
+    post:
+      tags:
+      - Storage Manager
+      summary: Download a file from IPFS
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: storagemanageripfsDownloadFileFromIPFSPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/storagemanageripfs_downloadFileFromIPFS_body'
+        required: true
+      responses:
+        "200":
+          description: File downloaded successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: StorageManager
+  /storagemanageripfs/updatePinStatus:
+    post:
+      tags:
+      - Storage Manager
+      summary: Update pin status of a file in IPFS
+      description: |
+        - **Production server**: https://api.krypcore.com/api/v0
+      operationId: storagemanageripfsUpdatePinStatusPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/storagemanageripfs_updatePinStatus_body'
+        required: true
+      responses:
+        "200":
+          description: Pin status updated successfully
+      security:
+      - ApiKeyAuth: []
+      - DappIdAuth: []
+      x-swagger-router-controller: StorageManager
+components:
+  schemas:
+    inline_response_200_1_Data:
+      type: object
+      properties:
+        address:
+          type: string
+          example: xxxxxxxxxxxxxxxxx
+        balance:
+          type: integer
+          example: 190909345505164350
+      example:
+        address: xxxxxxxxxxxxxxxxx
+        balance: 190909345505164350
+    inline_response_417:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Message:
+          type: string
+          example: key exist with specified name
+        Data:
+          type: object
+          nullable: true
+    easynft_createNFTCollection_body:
+      type: object
+      properties:
+        ERCStandard:
+          type: string
+        chainId:
+          type: string
+        collectionDescription:
+          type: string
+        collectionImage:
+          type: string
+          description: Base64 of the Image
+        collectionName:
+          type: string
+        collectionSymbol:
+          type: string
+        custodialWalletAccessToken:
+          type: string
+        isSoulBound:
+          type: boolean
+          example: false
+        walletType:
+          type: string
+    easynft_nftcollection_body:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 650ac47da42a151ae936d7ee
+        page:
+          type: integer
+          example: 0
+        pageSize:
+          type: integer
+          example: 10
+    inline_response_200_18_Data:
+      type: object
+      properties:
+        contractAddress:
+          type: string
+        referenceId:
+          type: string
+        txnHash:
+          type: string
+      example:
+        txnHash: txnHash
+        contractAddress: contractAddress
+        referenceId: referenceId
+    inline_response_200_7_Data:
+      type: object
+      properties:
+        response:
+          type: array
+          example: []
+          items:
+            type: string
+      example:
+        response: []
+    easynft_createNFT_body:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        name:
+          type: string
+          example: krypc55
+        description:
+          type: string
+          example: this is krypc logo
+        recepientAddress:
+          type: string
+          example: 0x313bA6399d60ff7c2ee8bCxxxxxxxxxxxxxxxxxx
+        attributes:
+          type: string
+          example: ""
+        quantity:
+          type: string
+          example: ""
+        erc:
+          type: string
+          example: ERC721
+        contractAddress:
+          type: string
+          example: 0x5D7276C99CE49e90B3eDxxxxxxxxxxxxxxxxxx
+        chainId:
+          type: string
+          example: "80001"
+        walletType:
+          type: string
+          description: |
+            Select the wallet type:  - **Self-Managed**: Use `custodialWalletAccessToken` - **Developer**: Use `privateKey`
+          enum:
+          - non-custodial
+          - dev-wallet
+        custodialWalletAccessToken:
+          type: string
+          example: 33e3183c-8356-xxxxxxxxxxxxxxxxxx
+        privateKey:
+          type: string
+          example: 0xABC1234567890xxxxxxxxxxxxxxxxxxxxxxxxxx
+    inline_response_200_21_Data:
+      type: object
+      properties:
+        referenceId:
+          type: string
+          example: 7d62f83b-5e73-45cb-bac5-d19708063f58
+        txnHash:
+          type: string
+          example: 7d62f83b-5e73-45cb-bac5-d19708063f58
+      example:
+        txnHash: 7d62f83b-5e73-45cb-bac5-d19708063f58
+        referenceId: 7d62f83b-5e73-45cb-bac5-d19708063f58
+    wallet_verifySignatureOffChain_body:
+      required:
+      - message
+      - signature
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: xxxxxxxxxxxx
+        message:
+          type: string
+          example: Hello
+        signature:
+          type: string
+          example: xxxxxxxxxxxxx
+    ftmanager_getTotalSupply_body:
+      type: object
+      properties:
+        chainId:
+          type: string
+        contractAddress:
+          type: string
+    ftmanager_balanceOf_body:
+      type: object
+      properties:
+        contractAddress:
+          type: string
+        address:
+          type: string
+    walletsubmitTransaction_params:
+      type: object
+      properties:
+        type:
+          type: string
+          example: uint256
+        value:
+          type: string
+          example: "35"
+    storagemanageripfs_getFileDetails_body:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+        pageSize:
+          type: integer
+          example: 10
+    devWallet_signEIP712Tx_body:
+      type: object
+      properties:
+        privateKey:
+          type: string
+          description: The private key of the signer
+          example: 0xdf051e3b025df09ae1cf24b6b17d25b29caf53e2386d92d32e9f40d878fb8317
+        data:
+          type: string
+          description: The EIP712 transaction data
+          example: "{\"domain\":{\"chainId\":80001,\"name\":\"MinimalForwarder\",\"\
+            verifyingContract\":\"0xdB4dFB11b6B74487c744c251d01718fEEb19279a\",\"\
+            version\":\"0.0.1\"},\"message\":{\"data\":\"0x14f710fe\",\"from\":\"\
+            0x11266906F2Eb9422924F3471F159377E2ED7c44C\",\"gas\":84762,\"nonce\":1,\"\
+            to\":\"0x0E762313219aE4dD7C674367a39901Ac1c28Cef3\",\"value\":0},\"primaryType\"\
+            :\"ForwardRequest\",\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"\
+            type\":\"string\"},{\"name\":\"version\",\"type\":\"string\"},{\"name\"\
+            :\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"\
+            type\":\"address\"}],\"ForwardRequest\":[{\"name\":\"from\",\"type\":\"\
+            address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"value\"\
+            ,\"type\":\"uint256\"},{\"name\":\"gas\",\"type\":\"uint256\"},{\"name\"\
+            :\"nonce\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"bytes\"\
+            }]}}"
+    inline_response_200_6_Data:
+      type: object
+      properties:
+        address:
+          type: string
+          example: 0xa287e3DE5f629fc49321De34F40da40aAd799fa7
+        estimatedGas:
+          type: integer
+          example: 23912
+      example:
+        address: 0xa287e3DE5f629fc49321De34F40da40aAd799fa7
+        estimatedGas: 23912
+    inline_response_401_1:
+      type: object
+      properties:
+        message:
+          type: string
+    storagemanageripfs_updatePinStatus_body:
+      type: object
+      properties:
+        id:
+          type: string
+          example: string
+    inline_response_200_17_Data:
+      type: object
+      properties:
+        address:
+          type: string
+          example: 0x67468FFc02100FA6E926484D8754dC00DdB8AE74
+        estimatedGas:
+          type: integer
+          example: 24156
+      example:
+        address: 0x67468FFc02100FA6E926484D8754dC00DdB8AE74
+        estimatedGas: 24156
+    inline_response_200_9:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/inline_response_200_9_Data'
+        Message:
+          type: string
+          example: Signed and executed txn successfully
+        Status:
+          type: string
+          example: SUCCESS
+      example:
+        Status: SUCCESS
+        Message: Signed and executed txn successfully
+        Data:
+          contractAddress: 0xe090232446154edc643B81e2BE984C010e6850e2
+          txHash: 0x610508484f9d8df4530aecbc9bdc7e65c81228fcea5dd8831a2737f3cfd5fc90
+    inline_response_200_22:
+      type: object
+      properties:
+        Data:
+          type: integer
+          example: 10000
+        Message:
+          type: string
+          example: Total Supply fetched successfully
+        Status:
+          type: string
+          example: SUCCESS
+      example:
+        Status: SUCCESS
+        Message: Total Supply fetched successfully
+        Data: 10000
+    inline_response_200_21:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/inline_response_200_21_Data'
+        Message:
+          type: string
+          example: FT transferred successfully
+        Status:
+          type: string
+          example: SUCCESS
+      example:
+        Status: SUCCESS
+        Message: FT transferred successfully
+        Data:
+          txnHash: 7d62f83b-5e73-45cb-bac5-d19708063f58
+          referenceId: 7d62f83b-5e73-45cb-bac5-d19708063f58
+    devWallet_createAndExecuteTx_body:
+      type: object
+      properties:
+        privateKey:
+          type: string
+          description: The private key of the sender's account
+          example: 0xdf051e3b025df09ae1cf24b6b17d25b29caf53e2386d92d32e9f40d878fb8317
+        to:
+          type: string
+          description: The recipient's address
+          example: 0x68dc1d32e2722bee40c0abfca40d7055a206cf2a
+        chainId:
+          type: integer
+          description: The chain ID of the blockchain network
+          example: 43113
+        method:
+          type: string
+          description: The method to be executed on the contract
+          example: store
+        params:
+          type: array
+          description: The parameters required for the method execution
+          items:
+            $ref: '#/components/schemas/walletsubmitTransaction_params'
+        isContractTxn:
+          type: boolean
+          description: Indicates whether the transaction is for a contract
+          example: true
+        contractABI:
+          type: string
+          description: The ABI (Application Binary Interface) of the contract
+          example: "[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"num\",\"\
+            type\":\"uint256\"}],\"name\":\"store\",\"outputs\":[],\"stateMutability\"\
+            :\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"retrieve\"\
+            ,\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"\
+            uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]"
+    inline_response_200_23:
+      type: object
+      properties:
+        Data:
+          type: integer
+        Message:
+          type: string
+        Status:
+          type: string
+      example:
+        Status: Status
+        Message: Message
+        Data: 0
+    inline_response_200_14_Data:
+      type: object
+      properties:
+        isVerified:
+          type: boolean
+          example: false
+      example:
+        isVerified: false
+    inline_response_200_5:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: Signed and executed txn successfully
+        Data:
+          $ref: '#/components/schemas/inline_response_200_5_Data'
+      example:
+        Status: SUCCESS
+        Message: Signed and executed txn successfully
+        Data:
+          txHash: 0x*****
+    inline_response_200_6:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: ""
+        Data:
+          $ref: '#/components/schemas/inline_response_200_6_Data'
+      example:
+        Status: SUCCESS
+        Message: ""
+        Data:
+          address: 0xa287e3DE5f629fc49321De34F40da40aAd799fa7
+          estimatedGas: 23912
+    inline_response_200_7:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: ""
+        Data:
+          $ref: '#/components/schemas/inline_response_200_7_Data'
+      example:
+        Status: SUCCESS
+        Message: ""
+        Data:
+          response: []
+    devWallet_callContract_body:
+      type: object
+      properties:
+        to:
+          type: string
+          description: The address of the smart contract to call
+          example: 0x68dc1d32e2722bee40c0abfca40d7055a206cf2a
+        chainId:
+          type: integer
+          description: The chain ID of the blockchain network
+          example: 43113
+        method:
+          type: string
+          description: The method to call on the smart contract
+          example: retrieve
+        params:
+          type: array
+          description: The parameters to pass to the method
+          example: []
+          items:
+            type: string
+        contractABI:
+          type: string
+          description: The ABI of the smart contract
+          example: "[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"num\",\"\
+            type\":\"uint256\"}],\"name\":\"store\",\"outputs\":[],\"stateMutability\"\
+            :\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"retrieve\"\
+            ,\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"\
+            uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]"
+    inline_response_200_20:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/inline_response_200_20_Data'
+        Message:
+          type: string
+        Status:
+          type: string
+      example:
+        Status: Status
+        Message: Message
+        Data:
+          txnHash: txnHash
+          referenceId: referenceId
+    inline_response_200_8:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/inline_response_200_8_Data'
+        Message:
+          type: string
+          example: Keys generated successfully
+        Status:
+          type: string
+          example: SUCCESS
+      example:
+        Status: SUCCESS
+        Message: Keys generated successfully
+        Data:
+          privateKey: 0x8899ef362e8f0dc82c053caa0c6b5001a463d109e838d5bcd28a703e51e45cb6
+          address: 0xe64f6f3c516475B352cE7127dfA98a0f848Eb323
+          publicKey: 0x04b23b7329b21ba9876e380247d6473a471f0dc2b43cbfc81594aa1a9f460032ba51dc912db4fa41f3a9780f97df54728032bad9b71fbc0d8c793829bc2fcd143a
+    inline_response_200_11_Data:
+      type: object
+      properties:
+        chainId:
+          type: string
+          example: "43113"
+        address:
+          type: string
+          example: 0x67468FFc02100FA6E926484D8754dC00DdB8AE74
+        balance:
+          type: integer
+          example: 79265400000000000
+      example:
+        address: 0x67468FFc02100FA6E926484D8754dC00DdB8AE74
+        balance: 79265400000000000
+        chainId: "43113"
+    ftmanager_approveFT_body:
+      type: object
+      properties:
+        approveAddress:
+          type: string
+        chainId:
+          type: string
+        contractAddress:
+          type: string
+        custodialWalletAccessToken:
+          type: string
+        quantity:
+          type: string
+        walletType:
+          type: string
+    wallet_signMessage_body:
+      required:
+      - message
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: xxxxxxxxx
+        message:
+          type: string
+          example: Hello
+    wallet_createWallet_body:
+      required:
+      - algorithm
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: ae
+        algorithm:
+          type: string
+          example: secp256k1
+    wallet_estimateGas_body:
+      required:
+      - isContractTxn
+      - method
+      - params
+      - to
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: effae2b6-3ee3-xxxxxxxxxxxxxxxxxxxxxxxxx
+        to:
+          type: string
+          example: 0xc2de797fab7d2d2b26xxxxxxxxxxxxxxxxxxxxxxxxx
+        method:
+          type: string
+          example: store
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletsubmitTransaction_params'
+        isContractTxn:
+          type: boolean
+          example: true
+        contractABI:
+          type: string
+          example: "[]"
+    ftmanager_createERC20_body:
+      type: object
+      properties:
+        ERCStandard:
+          type: string
+        chainId:
+          type: string
+        custodialWalletAccessToken:
+          type: string
+        decimal:
+          type: integer
+        premintAddress:
+          type: string
+        quantity:
+          type: integer
+        tokenName:
+          type: string
+        tokenSymbol:
+          type: string
+        walletType:
+          type: string
+    storagemanageripfs_storefile_body:
+      type: object
+      properties:
+        files:
+          type: string
+          format: binary
+    inline_response_200_19_Data:
+      type: object
+      properties:
+        pageCount:
+          type: integer
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_19_Data_result'
+      example:
+        result:
+        - apiKey: apiKey
+          walletType: walletType
+          tokenName: tokenName
+          contractAddress: contractAddress
+          instanceRef: instanceRef
+          ercStandard: ercStandard
+          referenceId: referenceId
+          txnHash: txnHash
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          privatekey: privatekey
+          premintAddress: premintAddress
+          projectID: projectID
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          quantity: quantity
+          tokenSymbol: tokenSymbol
+          custodialWalletAccessToken: custodialWalletAccessToken
+          isDefault: true
+          chainId: chainId
+          createdBy: createdBy
+          _id: _id
+          decimal: 6
+          subscriptionId: subscriptionId
+          walletAddress: walletAddress
+          uniqueId: uniqueId
+          status: status
+        - apiKey: apiKey
+          walletType: walletType
+          tokenName: tokenName
+          contractAddress: contractAddress
+          instanceRef: instanceRef
+          ercStandard: ercStandard
+          referenceId: referenceId
+          txnHash: txnHash
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          privatekey: privatekey
+          premintAddress: premintAddress
+          projectID: projectID
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          quantity: quantity
+          tokenSymbol: tokenSymbol
+          custodialWalletAccessToken: custodialWalletAccessToken
+          isDefault: true
+          chainId: chainId
+          createdBy: createdBy
+          _id: _id
+          decimal: 6
+          subscriptionId: subscriptionId
+          walletAddress: walletAddress
+          uniqueId: uniqueId
+          status: status
+        pageCount: 0
+    inline_response_200_1:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: ""
+        Data:
+          $ref: '#/components/schemas/inline_response_200_1_Data'
+      example:
+        Status: SUCCESS
+        Message: ""
+        Data:
+          address: xxxxxxxxxxxxxxxxx
+          balance: 190909345505164350
+    inline_response_200_2:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: Signed message successfully
+        Data:
+          type: string
+          example: 0x911deaf5473405b8fe2e8c3f37f90d111655b47b79e7c10dea89104f5efa84b12e1c762e453209d031e5010ca1c26002c1d0faaaf770066ebdb4d126e899c8b701
+      example:
+        Status: SUCCESS
+        Message: Signed message successfully
+        Data: 0x911deaf5473405b8fe2e8c3f37f90d111655b47b79e7c10dea89104f5efa84b12e1c762e453209d031e5010ca1c26002c1d0faaaf770066ebdb4d126e899c8b701
+    inline_response_200_3:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: ""
+        Data:
+          $ref: '#/components/schemas/inline_response_200_3_Data'
+      example:
+        Status: SUCCESS
+        Message: ""
+        Data:
+          isVerified: true
+    inline_response_200_4:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: Signed and executed txn successfully
+        Data:
+          $ref: '#/components/schemas/inline_response_200_4_Data'
+      example:
+        Status: SUCCESS
+        Message: Signed and executed txn successfully
+        Data:
+          contractAddress: 0xfvhkjkpw******
+          txHash: 0xaf324b3717e******
+    devWallet_signTxHash_body:
+      type: object
+      properties:
+        privateKey:
+          type: string
+          description: The private key used for signing
+          example: 0xdf051e3b025df09ae1cf24b6b17d25b29caf53e2386d92d32e9f40d878fb8317
+        txnHash:
+          type: string
+          description: The transaction hash to be signed
+          example: 0x881e3f0a8b70b95646c58040dacd90d66a2458342ca8fdfcb830f060a3d696c6
+    inline_response_200_Data:
+      type: object
+      properties:
+        WalletId:
+          type: string
+          example: 20775f3e-8be1-4e4c-8c80-xxxxxxxxxxx
+        Address:
+          type: string
+          example: 0x688c17c7FF9Def682b04699C31Dxxxxxxxxxxxxx
+      example:
+        Address: 0x688c17c7FF9Def682b04699C31Dxxxxxxxxxxxxx
+        WalletId: 20775f3e-8be1-4e4c-8c80-xxxxxxxxxxx
+    ftmanager_mintFT_body:
+      type: object
+      properties:
+        chainId:
+          type: string
+        contractAddress:
+          type: string
+        custodialWalletAccessToken:
+          type: string
+        erc:
+          type: string
+        quantity:
+          type: string
+        recipientAddress:
+          type: string
+        walletType:
+          type: string
+    easynft_nftlist_body:
+      type: object
+      properties:
+        contractAddress:
+          type: string
+          example: 0x06Da2002a7E29fDd0cef326BC0febd36f48962aA
+        page:
+          type: integer
+          example: 0
+        pageSize:
+          type: integer
+          example: 10
+    inline_response_200_11:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Code:
+          type: integer
+          example: 200
+        Message:
+          type: string
+          example: ""
+        Data:
+          $ref: '#/components/schemas/inline_response_200_11_Data'
+      example:
+        Status: SUCCESS
+        Message: ""
+        Data:
+          address: 0x67468FFc02100FA6E926484D8754dC00DdB8AE74
+          balance: 79265400000000000
+          chainId: "43113"
+        Code: 200
+    wallet_deployContract_body:
+      required:
+      - abi
+      - byteCode
+      - params
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: xxxxxxxxxxx
+        byteCode:
+          type: string
+          example: ""
+        abi:
+          type: string
+          example: ""
+        params:
+          type: array
+          example: []
+          items:
+            type: string
+        chainId:
+          type: integer
+    inline_response_200_10:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/inline_response_200_10_Data'
+        Message:
+          type: string
+          example: ""
+        Status:
+          type: string
+          example: SUCCESS
+      example:
+        Status: SUCCESS
+        Message: ""
+        Data:
+          response:
+          - 35
+    inline_response_200_19_Data_result:
+      type: object
+      properties:
+        _id:
+          type: string
+        apiKey:
+          type: string
+        chainId:
+          type: string
+        contractAddress:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        custodialWalletAccessToken:
+          type: string
+        decimal:
+          type: integer
+        ercStandard:
+          type: string
+        instanceRef:
+          type: string
+        isDefault:
+          type: boolean
+        premintAddress:
+          type: string
+        privatekey:
+          type: string
+        projectID:
+          type: string
+        quantity:
+          type: string
+        referenceId:
+          type: string
+        status:
+          type: string
+        subscriptionId:
+          type: string
+        tokenName:
+          type: string
+        tokenSymbol:
+          type: string
+        txnHash:
+          type: string
+        uniqueId:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        walletAddress:
+          type: string
+        walletType:
+          type: string
+      example:
+        apiKey: apiKey
+        walletType: walletType
+        tokenName: tokenName
+        contractAddress: contractAddress
+        instanceRef: instanceRef
+        ercStandard: ercStandard
+        referenceId: referenceId
+        txnHash: txnHash
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        privatekey: privatekey
+        premintAddress: premintAddress
+        projectID: projectID
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        quantity: quantity
+        tokenSymbol: tokenSymbol
+        custodialWalletAccessToken: custodialWalletAccessToken
+        isDefault: true
+        chainId: chainId
+        createdBy: createdBy
+        _id: _id
+        decimal: 6
+        subscriptionId: subscriptionId
+        walletAddress: walletAddress
+        uniqueId: uniqueId
+        status: status
+    inline_response_200_13:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: Data signed successfully
+        Data:
+          type: string
+          example: 0x24a8bd39d50f7fe6708687578801c753d9171b422b0d5621be65fd189c04404a1d0d6bba2cf28016f2da5080337d99d01bc56dc07a688466fd6d79191c8b82351c
+      example:
+        Status: SUCCESS
+        Message: Data signed successfully
+        Data: 0x24a8bd39d50f7fe6708687578801c753d9171b422b0d5621be65fd189c04404a1d0d6bba2cf28016f2da5080337d99d01bc56dc07a688466fd6d79191c8b82351c
+    inline_response_200_12:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: Signed and executed txn successfully
+        Data:
+          $ref: '#/components/schemas/inline_response_200_12_Data'
+      example:
+        Status: SUCCESS
+        Message: Signed and executed txn successfully
+        Data:
+          txHash: 0x8a7552326a39d3cc92725f55ecde0f8a65e3a1f98a683f707540c90e5294045b
+    ftmanager_transferFT_body:
+      type: object
+      properties:
+        chainId:
+          type: string
+        contractAddress:
+          type: string
+        custodialWalletAccessToken:
+          type: string
+        quantity:
+          type: string
+        recipientAddress:
+          type: string
+        walletType:
+          type: string
+    inline_response_200_4_Data:
+      type: object
+      properties:
+        txHash:
+          type: string
+          example: 0xaf324b3717e******
+        contractAddress:
+          type: string
+          example: 0xfvhkjkpw******
+      example:
+        contractAddress: 0xfvhkjkpw******
+        txHash: 0xaf324b3717e******
+    inline_response_200_19:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/inline_response_200_19_Data'
+        Message:
+          type: string
+        Status:
+          type: string
+      example:
+        Status: Status
+        Message: Message
+        Data:
+          result:
+          - apiKey: apiKey
+            walletType: walletType
+            tokenName: tokenName
+            contractAddress: contractAddress
+            instanceRef: instanceRef
+            ercStandard: ercStandard
+            referenceId: referenceId
+            txnHash: txnHash
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            privatekey: privatekey
+            premintAddress: premintAddress
+            projectID: projectID
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            quantity: quantity
+            tokenSymbol: tokenSymbol
+            custodialWalletAccessToken: custodialWalletAccessToken
+            isDefault: true
+            chainId: chainId
+            createdBy: createdBy
+            _id: _id
+            decimal: 6
+            subscriptionId: subscriptionId
+            walletAddress: walletAddress
+            uniqueId: uniqueId
+            status: status
+          - apiKey: apiKey
+            walletType: walletType
+            tokenName: tokenName
+            contractAddress: contractAddress
+            instanceRef: instanceRef
+            ercStandard: ercStandard
+            referenceId: referenceId
+            txnHash: txnHash
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            privatekey: privatekey
+            premintAddress: premintAddress
+            projectID: projectID
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            quantity: quantity
+            tokenSymbol: tokenSymbol
+            custodialWalletAccessToken: custodialWalletAccessToken
+            isDefault: true
+            chainId: chainId
+            createdBy: createdBy
+            _id: _id
+            decimal: 6
+            subscriptionId: subscriptionId
+            walletAddress: walletAddress
+            uniqueId: uniqueId
+            status: status
+          pageCount: 0
+    inline_response_200_18:
+      type: object
+      properties:
+        Data:
+          $ref: '#/components/schemas/inline_response_200_18_Data'
+        Message:
+          type: string
+        Status:
+          type: string
+      example:
+        Status: Status
+        Message: Message
+        Data:
+          txnHash: txnHash
+          contractAddress: contractAddress
+          referenceId: referenceId
+    inline_response_200_10_Data:
+      type: object
+      properties:
+        response:
+          type: array
+          example:
+          - 35
+          items:
+            type: integer
+      example:
+        response:
+        - 35
+    inline_response_200_15:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: Message signed successfully
+        Data:
+          type: string
+          example: 0x...
+      example:
+        Status: SUCCESS
+        Message: Message signed successfully
+        Data: 0x...
+    devWallet_verifySignatureOffChain_body:
+      type: object
+      properties:
+        privateKey:
+          type: string
+          description: The private key used for signing
+          example: 0xdf051e3b025df09ae1cf24b6b17d25b29caf53e2386d92d32e9f40d878fb8317
+        message:
+          type: string
+          description: The message that was signed
+          example: Hello
+        signature:
+          type: string
+          description: The signature to be verified
+          example: 0x4f3728c2ccf50bc763224c4d6b7e95376bbf86d0b438a3a4cdc38525e0915b6021106fe47e0e690563881faf52498514370880cd3f262085b08c72e0c4da9c9200
+    inline_response_200_14:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: ""
+        Data:
+          $ref: '#/components/schemas/inline_response_200_14_Data'
+      example:
+        Status: SUCCESS
+        Message: ""
+        Data:
+          isVerified: false
+    inline_response_200_17:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: ""
+        Data:
+          $ref: '#/components/schemas/inline_response_200_17_Data'
+      example:
+        Status: SUCCESS
+        Message: ""
+        Data:
+          address: 0x67468FFc02100FA6E926484D8754dC00DdB8AE74
+          estimatedGas: 24156
+    inline_response_200_16:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: Signed txn hash successfully
+        Data:
+          type: string
+          example: kODr+vTZZSu88rltJytOGVwITUBU1N6uzpvqtGg4FwYDMDEJ6T2dZZTRwiT5biGQZnhT0l5LyYw6rIeFHH+cWwE=
+      example:
+        Status: SUCCESS
+        Message: Signed txn hash successfully
+        Data: kODr+vTZZSu88rltJytOGVwITUBU1N6uzpvqtGg4FwYDMDEJ6T2dZZTRwiT5biGQZnhT0l5LyYw6rIeFHH+cWwE=
+    ftmanager_burnFT_body:
+      type: object
+      properties:
+        burnAddress:
+          type: string
+        chainId:
+          type: string
+        contractAddress:
+          type: string
+        custodialWalletAccessToken:
+          type: string
+        quantity:
+          type: string
+        walletType:
+          type: string
+    inline_response_200_9_Data:
+      type: object
+      properties:
+        contractAddress:
+          type: string
+          example: 0xe090232446154edc643B81e2BE984C010e6850e2
+        txHash:
+          type: string
+          example: 0x610508484f9d8df4530aecbc9bdc7e65c81228fcea5dd8831a2737f3cfd5fc90
+      example:
+        contractAddress: 0xe090232446154edc643B81e2BE984C010e6850e2
+        txHash: 0x610508484f9d8df4530aecbc9bdc7e65c81228fcea5dd8831a2737f3cfd5fc90
+    devWallet_deployContract_body:
+      type: object
+      properties:
+        service:
+          type: string
+          example: easy-nft
+        privateKey:
+          type: string
+          description: The private key of the sender's account
+          example: 0xdf051e3b025df09ae1cf24b6b17d25b29caf53e2386d92d32e9f40d878fb8317
+        address:
+          type: string
+          example: 0xe64f6f3c516475B352cE7127dfA98a0f848Eb323
+        byteCode:
+          type: string
+          example: 6080604052348015600e575f80fd5b506101438061001c5f395ff3fe608060405234801561000f575f80fd5b5060043610610034575f3560e01c80632e64cec1146100385780636057361d14610056575b5f80fd5b610040610072565b60405161004d919061009b565b60405180910390f35b610070600480360381019061006b91906100e2565b61007a565b005b5f8054905090565b805f8190555050565b5f819050919050565b61009581610083565b82525050565b5f6020820190506100ae5f83018461008c565b92915050565b5f80fd5b6100c181610083565b81146100cb575f80fd5b50565b5f813590506100dc816100b8565b92915050565b5f602082840312156100f7576100f66100b4565b5b5f610104848285016100ce565b9150509291505056fea2646970667358221220a6710181372d0f08d0c328ad9dc690bcf7935799fa8c413722ea2563efaa104b64736f6c63430008190033
+        abi:
+          type: string
+          example: W3siaW5wdXRzIjpbeyJpbnRlcm5hbFR5cGUiOiJ1aW50MjU2IiwibmFtZSI6Im51bSIsInR5cGUiOiJ1aW50MjU2In1dLCJuYW1lIjoic3RvcmUiLCJvdXRwdXRzIjpbXSwic3RhdGVNdXRhYmlsaXR5Ijoibm9ucGF5YWJsZSIsInR5cGUiOiJmdW5jdGlvbiJ9LHsiaW5wdXRzIjpbXSwibmFtZSI6InJldHJpZXZlIiwib3V0cHV0cyI6W3siaW50ZXJuYWxUeXBlIjoidWludDI1NiIsIm5hbWUiOiIiLCJ0eXBlIjoidWludDI1NiJ9XSwic3RhdGVNdXRhYmlsaXR5IjoidmlldyIsInR5cGUiOiJmdW5jdGlvbiJ9XQ==
+        params:
+          type: array
+          example: []
+          items:
+            type: string
+        chainId:
+          type: integer
+          example: 43113
+    easynft_nftcollectionlist_body:
+      type: object
+      properties:
+        instanceId:
+          type: string
+          example: xxx_xx_xx_xxxxxx
+        page:
+          type: integer
+          example: 0
+        pageSize:
+          type: integer
+          example: 10
+    wallet_getBalance_body:
+      required:
+      - chainId
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: '*******-****-****-****-*****'
+        chainId:
+          type: string
+          example: '****'
+    inline_response_200:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: SUCCESS
+        Message:
+          type: string
+          example: wallet created successfully
+        Data:
+          $ref: '#/components/schemas/inline_response_200_Data'
+      example:
+        Status: SUCCESS
+        Message: wallet created successfully
+        Data:
+          Address: 0x688c17c7FF9Def682b04699C31Dxxxxxxxxxxxxx
+          WalletId: 20775f3e-8be1-4e4c-8c80-xxxxxxxxxxx
+    inline_response_200_3_Data:
+      type: object
+      properties:
+        isVerified:
+          type: boolean
+          example: true
+      example:
+        isVerified: true
+    storagemanageripfs_downloadFileFromIPFS_body:
+      type: object
+      properties:
+        id:
+          type: string
+          example: string
+    inline_response_401:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Message:
+          type: string
+          example: Key not found
+        Data:
+          type: object
+          nullable: true
+    inline_response_400_2:
+      type: object
+      properties:
+        Status:
+          type: string
+        Code:
+          type: integer
+        Message:
+          type: string
+    inline_response_400:
+      type: object
+      properties:
+        Data:
+          type: string
+        Message:
+          type: string
+          example: Mandatory params missing
+        Status:
+          type: string
+          example: FAILURE
+    inline_response_400_1:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Code:
+          type: integer
+          example: 400
+        Message:
+          type: string
+          example: Mandatory params missing
+        Data:
+          type: string
+    devWallet_estimateGas_body:
+      type: object
+      properties:
+        privateKey:
+          type: string
+          description: The private key of the sender's account
+          example: 0xdf051e3b025df09ae1cf24b6b17d25b29caf53e2386d92d32e9f40d878fb8317
+        to:
+          type: string
+          description: The recipient's address
+          example: 0x68dc1d32e2722bee40c0abfca40d7055a206cf2a
+        chainId:
+          type: integer
+          description: The chain ID of the blockchain network
+          example: 43113
+        method:
+          type: string
+          description: The method to be executed on the contract
+          example: store
+        params:
+          type: array
+          description: The parameters required for the method execution
+          items:
+            $ref: '#/components/schemas/walletsubmitTransaction_params'
+        isContractTxn:
+          type: boolean
+          description: Indicates whether the transaction is for a contract
+          example: true
+        contractABI:
+          type: string
+          description: The ABI (Application Binary Interface) of the contract
+          example: "[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"num\",\"\
+            type\":\"uint256\"}],\"name\":\"store\",\"outputs\":[],\"stateMutability\"\
+            :\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"retrieve\"\
+            ,\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"\
+            uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]"
+    ftmanager_erc20token_body:
+      type: object
+      properties:
+        instanceId:
+          type: string
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    wallet_submitTransaction_body:
+      required:
+      - chainId
+      - isContractTxn
+      - method
+      - params
+      - to
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: effae2b6-3ee3-xxxxxxxxxxxxxxxxxx
+        to:
+          type: string
+          example: 0xc2de797fab7d2d2bxxxxxxxxxxxxxxxxxxxxx
+        chainId:
+          type: integer
+        method:
+          type: string
+          example: store
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletsubmitTransaction_params'
+        isContractTxn:
+          type: boolean
+          example: true
+        contractABI:
+          type: string
+          example: "[]"
+    inline_response_404:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Not Found
+    inline_response_417_2:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Message:
+          type: string
+          example: "invalid UUID length: 30"
+        Data:
+          type: object
+          nullable: true
+    inline_response_417_1:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Message:
+          type: string
+          example: "mongo: no documents in result"
+        Data:
+          type: object
+          nullable: true
+    inline_response_417_4:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Message:
+          type: string
+          example: error deploying contract invalid character ':' after array element
+        Data:
+          type: object
+          nullable: true
+    inline_response_409:
+      type: object
+      properties:
+        Data:
+          type: string
+        Message:
+          type: string
+        Status:
+          type: string
+    inline_response_417_3:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Message:
+          type: string
+          example: "error getting public key from signature : invalid signature recovery\
+            \ id"
+        Data:
+          type: object
+          nullable: true
+    wallet_callContract_body:
+      required:
+      - contractABI
+      - method
+      - params
+      - to
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: effae2b6-3ee3-48cb-9528-87c29152c89e
+        to:
+          type: string
+          example: 0xc2de797fab7d2d2b26246e93fcf2cd5873a90b10
+        method:
+          type: string
+          example: store
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletsubmitTransaction_params'
+        contractABI:
+          type: string
+          example: "[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"num\",\"\
+            type\":\"uint256\"}],\"name\":\"store\",\"outputs\":[],\"stateMutability\"\
+            :\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"retrieve\"\
+            ,\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"\
+            uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]"
+    inline_response_417_6:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Message:
+          type: string
+          example: "error reading ABI : EOF"
+        Data:
+          type: object
+          nullable: true
+    inline_response_417_5:
+      type: object
+      properties:
+        Status:
+          type: string
+          example: FAILURE
+        Message:
+          type: string
+          example: "error sending txn to contract : no contract code at given address"
+        Data:
+          type: object
+          nullable: true
+    inline_response_200_5_Data:
+      type: object
+      properties:
+        txHash:
+          type: string
+          example: 0x*****
+      example:
+        txHash: 0x*****
+    devWallet_generateKeys_body:
+      type: object
+      properties:
+        service:
+          type: string
+          example: generate-keys
+    devWallet_getBalance_body:
+      type: object
+      properties:
+        chainId:
+          type: string
+          description: The chain ID of the blockchain network
+          example: "43113"
+        address:
+          type: string
+          description: The address to retrieve the balance for
+          example: 0x67468FFc02100FA6E926484D8754dC00DdB8AE74
+    devWallet_signMessage_body:
+      type: object
+      properties:
+        privateKey:
+          type: string
+          description: The private key used for signing
+          example: 0xdf051e3b025df09ae1cf24b6b17d25b29caf53e2386d92d32e9f40d878fb8317
+        message:
+          type: string
+          description: The message to be signed
+          example: Hello
+    inline_response_200_20_Data:
+      type: object
+      properties:
+        referenceId:
+          type: string
+        txnHash:
+          type: string
+      example:
+        txnHash: txnHash
+        referenceId: referenceId
+    inline_response_200_8_Data:
+      type: object
+      properties:
+        address:
+          type: string
+          example: 0xe64f6f3c516475B352cE7127dfA98a0f848Eb323
+        privateKey:
+          type: string
+          example: 0x8899ef362e8f0dc82c053caa0c6b5001a463d109e838d5bcd28a703e51e45cb6
+        publicKey:
+          type: string
+          example: 0x04b23b7329b21ba9876e380247d6473a471f0dc2b43cbfc81594aa1a9f460032ba51dc912db4fa41f3a9780f97df54728032bad9b71fbc0d8c793829bc2fcd143a
+      example:
+        privateKey: 0x8899ef362e8f0dc82c053caa0c6b5001a463d109e838d5bcd28a703e51e45cb6
+        address: 0xe64f6f3c516475B352cE7127dfA98a0f848Eb323
+        publicKey: 0x04b23b7329b21ba9876e380247d6473a471f0dc2b43cbfc81594aa1a9f460032ba51dc912db4fa41f3a9780f97df54728032bad9b71fbc0d8c793829bc2fcd143a
+    inline_response_200_12_Data:
+      type: object
+      properties:
+        txHash:
+          type: string
+          example: 0x8a7552326a39d3cc92725f55ecde0f8a65e3a1f98a683f707540c90e5294045b
+      example:
+        txHash: 0x8a7552326a39d3cc92725f55ecde0f8a65e3a1f98a683f707540c90e5294045b
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+    DappIdAuth:
+      type: apiKey
+      name: DappId
+      in: header
+    SubscriptionIdAuth:
+      type: apiKey
+      name: SubscriptionId
+      in: header
+    ChainIdAuth:
+      type: apiKey
+      name: ChainId
+      in: header
